@@ -1,6 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Hexo+GitHub搭建博客</title>
+    <url>/2022/07/01/Hexo+GitHub%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/</url>
+    <content><![CDATA[<p><img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fwww.zyiz.net%2Fupload%2F202002%2F18%2F202002182223498227.png&refer=http%3A%2F%2Fwww.zyiz.net&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1659501869&t=eedef2a99fe19a8fd51bafe9ae2a1177" alt="img"></p>
+<span id="more"></span>
+
+<p>搭建博客千千万，最后受欢迎的9还是Hexo和Jekyll,用户用的非常多的两个静态博客生成系统。本文就介绍利用Hexo结合github page来搭建个人博客。</p>
+<h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><h3 id="什么是Hexo？"><a href="#什么是Hexo？" class="headerlink" title="什么是Hexo？"></a>什么是Hexo？</h3><p>Hexo 是一个基于 node.js 制作的快速、简洁且高效的博客框架。Hexo 可以将我们撰写的 Markdown 文档解析渲染成静态的 HTML 网页。</p>
+<h3 id="Hexo和Jekyll的区别"><a href="#Hexo和Jekyll的区别" class="headerlink" title="Hexo和Jekyll的区别"></a>Hexo和Jekyll的区别</h3><p>·本地环境<br>Jeklly 是由 Ruby 语言编写，需要到官网下载并安装 RubyInstaller。Hexo 则需要安装 Node.js 环境。网上经常看到很多人吐槽安装 Jekyll 经常碰到各种问题。</p>
+<p>·速度<br>说是比较 Hexo 和 Jeklly 这两个框架，其实要比较 Ruby 和 Node.js 的运行速度。Node.js 是一个 Javascrip t运行环境(Runtime)。实际上它是对 Google V8 引擎进行了封装。众所周知，Google JS Runtime 速度非常快，性能非常好。在本地预览上，Jekyll 是生成了页面然后进行预览，而 Hexo 是没有在根目录生成文件的，速度也快不少。因此，Hexo 在性能和速度上面更胜一筹。</p>
+<p>·部署<br>Jeklly 是将整个工程源码上传到 Github 仓库，然后 Github 会自动生成静态文件。而 Hexo 需要事先在本地生成整个站点页面，再将 Html 文件、资源文件等上传到 Github 上。</p>
+<p>·主题<br>Jekyll 使用 Liquid；它是有 Ruby 语言编写的开源模板语言。Hexo 使用的是 EJS；EJS 是 JavaScript 模板库，用来从 JSON 数据中生成 HTML 字符串。EJS 相对比较复杂，所以可实现的功能更加的多。从开发一个主题难度上看，Hexo 实现起来更方便、更简单些。</p>
+<h2 id="安装环境"><a href="#安装环境" class="headerlink" title="安装环境"></a>安装环境</h2><p>1、本机系统：Windows 10（64位）<br>2、Node.js：v6.9.2LTS（64位）</p>
+<h2 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h2><h3 id="安装Node-js"><a href="#安装Node-js" class="headerlink" title="安装Node.js"></a>安装Node.js</h3><p>简单的说 Node.js 就是运行在服务端的 JavaScript。Node.js 是一个基于 Chrome V8 引擎的 JavaScript 运行环境。Node.js 使用了一个事件驱动、非阻塞式 I&#x2F;O 的模型，使其轻量又高效。Node.js 的包管理器 npm，是全球最大的开源库生态系统。<br>打开官网下载链接Node.js:<a href="https://nodejs.org/en/">https://nodejs.org/en/</a> (选择长期服务，版本更稳定)</p>
+<p><img src="https://i.loli.net/2021/10/19/PWDijRHqgzxFbyn.jpg" alt="img"></p>
+<p>下载完成之后直接双击安装包，只需点击下一步（默认所有选项），然后改变安装路径即可。</p>
+<p>测试安装是否成功：</p>
+<p>按【win+R】键，输入cmd，再按回车弹出命令窗口</p>
+<p>输入：(显示版本行)</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">node -v </span><br><span class="line">npm -v</span><br></pre></td></tr></table></figure>
+
+<p>显示结果：</p>
+<p><img src="https://i.loli.net/2021/10/19/fDzgWhEbnkxPevL.jpg" alt="img"></p>
+<p>即安装成功；</p>
+<h3 id="安装git"><a href="#安装git" class="headerlink" title="安装git"></a>安装git</h3><p>Git是一个开源的分布式版本控制系统，可以有效、高速地处理从很小到非常大的项目版本管理。 也是Linus Torvalds为了帮助管理Linux内核开发而开发的一个开放源码的版本控制软件。</p>
+<p><strong>从一般开发者的角度来看，git有以下功能：</strong><br>1、从服务器上克隆完整的Git仓库（包括代码和版本信息）到单机上。<br>2、在自己的机器上根据不同的开发目的，创建分支，修改代码。<br>3、在单机上自己创建的分支上提交代码。<br>4、在单机上合并分支。<br>5、把服务器上最新版的代码fetch下来，然后跟自己的主分支合并。<br>6、生成补丁（patch），把补丁发送给主开发者。</p>
+<p>打开官网下载链接：<a href="https://git-scm.com/downloads">https://git-scm.com/downloads</a> (选择windows版本即可)</p>
+<p><img src="https://i.loli.net/2021/10/19/7UgXJ4y3MV6Bpri.jpg" alt="img"></p>
+<p>下载完成之后直接双击安装包，只需点击下一步（出下图外选项，默认所有选项），然后改变安装路径即可。</p>
+<p><img src="https://i.loli.net/2021/10/19/oT9CgyscVXWPnbF.jpg" alt="img"></p>
+<p>测试是否安装成功：</p>
+<p>按【win+R】键，输入cmd，再按回车弹出命令窗口，再输入：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git</span><br></pre></td></tr></table></figure>
+
+<p>显示结果:</p>
+<p><img src="https://i.loli.net/2021/10/19/y5LnHxaYiID93Cs.jpg" alt="img"></p>
+<h2 id="开始搭建"><a href="#开始搭建" class="headerlink" title="开始搭建"></a>开始搭建</h2><h3 id="在Git安装目录中点击【git-bash-exe】-输入命令：（输入时引号不要删）"><a href="#在Git安装目录中点击【git-bash-exe】-输入命令：（输入时引号不要删）" class="headerlink" title="在Git安装目录中点击【git-bash.exe】,输入命令：（输入时引号不要删）"></a>在Git安装目录中点击【git-bash.exe】,输入命令：（输入时引号不要删）</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa -C &quot;Github注册的邮箱&quot;</span><br></pre></td></tr></table></figure>
+
+<p>然后按四次【enter】即可，生成后如下图：</p>
+<p><img src="https://i.loli.net/2021/10/19/6S8LwDAmHTMvqJz.jpg" alt="img"></p>
+<h3 id="打开Github-点击头像–-gt-【setting】"><a href="#打开Github-点击头像–-gt-【setting】" class="headerlink" title="打开Github,点击头像–&gt;【setting】"></a>打开Github,点击头像–&gt;【setting】</h3><p><img src="https://i.loli.net/2021/10/19/15flbemyaNIu4MU.jpg" alt="img"></p>
+<h3 id="点击【SSH-and-GPG-keys】–-gt-【New-SSH-key】"><a href="#点击【SSH-and-GPG-keys】–-gt-【New-SSH-key】" class="headerlink" title="点击【SSH and GPG keys】–&gt;【New SSH key】"></a>点击【SSH and GPG keys】–&gt;【New SSH key】</h3><p><img src="https://i.loli.net/2021/10/19/JNnuwh4dAMHFILT.jpg" alt="img"></p>
+<h3 id="输入title（可以随便输），但Key你需要用记事本或Notepad-打开磁盘中c-x2F-用户-x2F-用户名-x2F-ssh-x2F-id-rsa-pub然后复制粘贴里面的内容到key中，最后点击【ADD-SSH-key】；"><a href="#输入title（可以随便输），但Key你需要用记事本或Notepad-打开磁盘中c-x2F-用户-x2F-用户名-x2F-ssh-x2F-id-rsa-pub然后复制粘贴里面的内容到key中，最后点击【ADD-SSH-key】；" class="headerlink" title="输入title（可以随便输），但Key你需要用记事本或Notepad++打开磁盘中c:&#x2F;用户&#x2F;用户名&#x2F;.ssh&#x2F;id_rsa.pub然后复制粘贴里面的内容到key中，最后点击【ADD SSH key】；"></a>输入title（可以随便输），但Key你需要用记事本或Notepad++打开<strong>磁盘中c:&#x2F;用户&#x2F;用户名&#x2F;.ssh&#x2F;id_rsa.pub</strong>然后复制粘贴里面的内容到key中，最后点击【ADD SSH key】；</h3><p><img src="https://i.loli.net/2021/10/19/uglR7p4jMUSbfxe.jpg" alt="img"></p>
+<h3 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h3><p>在想要搭建博客的目录下创建文件夹名为blog，按【win+R】键，输入cmd，再按回车弹出命令窗口，cd到创建的文件夹下，输入：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hexo-cli -g</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2021/10/19/pwBHNlgo2cdZiA4.jpg" alt="img"></p>
+<p>不要关闭刚才的命令窗口，在刚才的窗口中初始化hexo，输入：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo init 你的博客名</span><br></pre></td></tr></table></figure>
+
+<h3 id="在博客目录中安装依赖"><a href="#在博客目录中安装依赖" class="headerlink" title="在博客目录中安装依赖"></a>在博客目录中安装依赖</h3><p>在刚才的窗口中</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd 博客名</span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
+
+<p>安装完成之后进行测试，窗口中输入：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo s -p 5555</span><br></pre></td></tr></table></figure>
+
+<p>在浏览器上输入 localhost:5555</p>
+<p><img src="https://i.loli.net/2021/10/19/KFMBiULjA1yY8st.jpg" alt="img"></p>
+<h3 id="安装Sublime-Text"><a href="#安装Sublime-Text" class="headerlink" title="安装Sublime Text"></a>安装Sublime Text</h3><p>打开官网下载链接：<a href="https://www.sublimetext.com/">https://www.sublimetext.com/</a> （点击DPWNLOAD FOR WINDOWS）</p>
+<p><img src="https://i.loli.net/2021/10/19/kAnXiPatsr2zxDc.jpg" alt="img"></p>
+<p>下载完成之后直接双击安装包，只需点击下一步（默认所有选项），然后改变安装路径即可。</p>
+<p>打开Sublime 直接将博客目录拖进Sublime即可；</p>
+<p><img src="https://i.loli.net/2021/10/19/RMkyeoixVCAt81f.jpg" alt="img"></p>
+<h3 id="hexo发布到Github"><a href="#hexo发布到Github" class="headerlink" title="hexo发布到Github"></a>hexo发布到Github</h3><p>使用Sublime打开博客根目录中_config.yml 修改第16行的url 改为自己的网址（如 https:&#x2F;&#x2F;自己的博客名.github.io ）</p>
+<p><img src="https://i.loli.net/2021/10/20/QHMrJse8xOnjWl5.jpg" alt="img"></p>
+<p>打开Github网页点击【Your repositories】 最后复制链接</p>
+<p><img src="https://i.loli.net/2021/10/20/u1w8kDULWQBvGzs.jpg" alt="img"><img src="https://i.loli.net/2021/10/20/6cGuVNTXKWFSZsw.jpg" alt="img"><img src="https://i.loli.net/2021/10/20/Sn8IUm5Tsq6dDcg.jpg" alt="img"></p>
+<p>在_config.yml文件最后一行添加repo</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">repo: </span><br></pre></td></tr></table></figure>
+
+<p>将你复制的链接添加到repo之后，用引号隔开（切记引号后面必须要有空格）</p>
+<p>在最后一行添加</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">branch: main</span><br></pre></td></tr></table></figure>
+
+<p>type后添加git</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">type: git</span><br></pre></td></tr></table></figure>
+
+<p>如下图<br><img src="https://i.loli.net/2021/10/21/b4Px7pFjTvI5ea2.jpg" alt="img"></p>
+<p>在博客根目录下添加插件：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
+
+<h3 id="获取个人访问令牌"><a href="#获取个人访问令牌" class="headerlink" title="获取个人访问令牌"></a>获取个人访问令牌</h3><p>对密码身份验证的支持已于 2021 年 8 月 13 日移除。现在改用个人访问令牌。简单点说就是需要把你的密码换成 token。</p>
+<p>在个人设置页面，找到 Settings<br><img src="https://i.loli.net/2021/10/19/15flbemyaNIu4MU.jpg" alt="img"><br>找到 Developer settings<br><img src="https://i.loli.net/2021/10/21/VkyOgL5Z1746mzT.jpg" alt="img"><br>选择个人访问令牌 Personal access tokens，然后点击生成令牌 Generate new token<br><img src="https://i.loli.net/2021/10/21/KsVtaRpmhUSLorF.jpg" alt="img"><br>设置 token 的有效期，访问权限等，生成令牌 Generate token<br><img src="https://i.loli.net/2021/10/21/6Kdwmi7Qr2MWUJf.jpg" alt="img"><br>如下为生成的令牌<br><img src="https://i.loli.net/2021/10/21/LMsRWZaq8oSUwnh.jpg" alt="img"></p>
+<p>注意<br>记得把 token 保存下来，当你再次刷新网页的时候，就没办法看见了</p>
+<p>最后，把 token 直接添加远程仓库链接中，这样就可以避免同一个仓库每次提交代码都要输入 token 了。</p>
+<p>添加到如下图位置：（使用“@”和后面内容隔开）</p>
+<p><img src="https://i.loli.net/2021/10/21/WCX7dgp9UNFxJ1B.jpg" alt="img"></p>
+<h3 id="git中设置你的用户名和邮件名"><a href="#git中设置你的用户名和邮件名" class="headerlink" title="git中设置你的用户名和邮件名"></a>git中设置你的用户名和邮件名</h3><p>这一点很重要，因为每一个 Git 提交都会使用这些信息，它们会写入到你的每一次提交中。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git config --global user.name &quot;Your Name&quot;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git config --global user.name &quot;you@example.com&quot;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="生成提交"><a href="#生成提交" class="headerlink" title="生成提交"></a>生成提交</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+
+<p>打开你的浏览器：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">https://博客名.github.io</span><br></pre></td></tr></table></figure>
+
+<p>恭喜您，您的博客现在已制作完成，现在只需要添加你喜欢的主题既可以开始你的博客之旅了。</p>
+<h3 id="添加主题"><a href="#添加主题" class="headerlink" title="添加主题"></a>添加主题</h3><p>hexo主题网站：<a href="https://hexo.io/themes/">https://hexo.io/themes/</a><br><img src="https://i.loli.net/2021/10/21/AhUeqK8sB53jp4k.jpg" alt="img"></p>
+<p>找到你喜欢的主题，例如next主题 点击【next】<br><img src="https://i.loli.net/2021/10/21/ciqEGsyQ3l9Oorp.jpg" alt="img"></p>
+<p>按照文件中所说下载和修改即可<br><img src="https://i.loli.net/2021/10/21/b16RkjZFNDQAEic.jpg" alt="img"></p>
+<p>在博客根目录中打开【Git Bash Here】</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hexo-themes-next</span><br></pre></td></tr></table></figure>
+
+<p>安装完成后，打开 Hexo 配置文件(_config.yml)并将theme变量设置为next.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">theme: next</span><br></pre></td></tr></table></figure>
+
+<h3 id="现在来介绍常用的Hexo-命令"><a href="#现在来介绍常用的Hexo-命令" class="headerlink" title="现在来介绍常用的Hexo 命令"></a>现在来介绍常用的Hexo 命令</h3><p>npm install hexo -g #安装Hexo<br>npm update hexo -g #升级<br>hexo init #初始化博客</p>
+<p>命令简写<br>hexo n “我的博客” &#x3D;&#x3D; hexo new “我的博客” #新建文章<br>hexo g &#x3D;&#x3D; hexo generate #生成<br>hexo s &#x3D;&#x3D; hexo server #启动服务预览<br>hexo d &#x3D;&#x3D; hexo deploy #部署</p>
+<p>hexo server #Hexo会监视文件变动并自动更新，无须重启服务器<br>hexo server -s #静态模式<br>hexo server -p 5000 #更改端口<br>hexo server -i 192.168.1.1 #自定义 IP<br>hexo clean #清除缓存，若是网页正常情况下可以忽略这条命令</p>
+]]></content>
+  </entry>
+  <entry>
     <title>Json教程</title>
     <url>/2022/07/01/Json%E6%95%99%E7%A8%8B/</url>
     <content><![CDATA[<p><img src="https://img0.baidu.com/it/u=1264698771,643931544&fm=253&fmt=auto&app=138&f=JPEG?w=640&h=404" alt="img"></p>
@@ -39,6 +155,44 @@
 <p>在接收服务器数据时一般是字符串。</p>
 <p>我们可以使用 JSON.parse() 方法将数据转换为 JavaScript 对象。</p>
 ]]></content>
+  </entry>
+  <entry>
+    <title>SpringBoot整合JPA</title>
+    <url>/2022/07/01/SpringBoot%E6%95%B4%E5%90%88Jpa/</url>
+    <content><![CDATA[<p><img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg2020.cnblogs.com%2Fblog%2F2331630%2F202107%2F2331630-20210721141158611-538846916.png&refer=http%3A%2F%2Fimg2020.cnblogs.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1659501639&t=2f8efd79e607e9df171c317efc448f26" alt="img"></p>
+<span id="more"></span>
+
+
+<p>1.添加依赖</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="operator">&lt;</span>dependency<span class="operator">&gt;</span></span><br><span class="line">            <span class="operator">&lt;</span>groupId<span class="operator">&gt;</span>org.springframework.boot<span class="operator">&lt;</span><span class="operator">/</span>groupId<span class="operator">&gt;</span></span><br><span class="line">            <span class="operator">&lt;</span>artifactId<span class="operator">&gt;</span>spring<span class="operator">-</span>boot<span class="operator">-</span>starter<span class="operator">-</span>data<span class="operator">-</span>jpa<span class="operator">&lt;</span><span class="operator">/</span>artifactId<span class="operator">&gt;</span></span><br><span class="line">        <span class="operator">&lt;</span><span class="operator">/</span>dependency<span class="operator">&gt;</span></span><br><span class="line">        <span class="operator">&lt;</span>dependency<span class="operator">&gt;</span></span><br><span class="line">            <span class="operator">&lt;</span>groupId<span class="operator">&gt;</span>org.springframework.boot<span class="operator">&lt;</span><span class="operator">/</span>groupId<span class="operator">&gt;</span></span><br><span class="line">            <span class="operator">&lt;</span>artifactId<span class="operator">&gt;</span>spring<span class="operator">-</span>boot<span class="operator">-</span>starter<span class="operator">-</span>jdbc<span class="operator">&lt;</span><span class="operator">/</span>artifactId<span class="operator">&gt;</span></span><br><span class="line">        <span class="operator">&lt;</span><span class="operator">/</span>dependency<span class="operator">&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>2.配置数据源</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">datasource:</span></span><br><span class="line">    <span class="attr">url:</span> <span class="string">jdbc:mysql://localhost:3306/student?serverTimezone=Asia/Shanghai</span></span><br><span class="line">    <span class="attr">username:</span> <span class="string">root</span></span><br><span class="line">    <span class="attr">password:</span> <span class="string">root</span></span><br><span class="line">    <span class="attr">driver-class-name:</span> <span class="string">com.mysql.cj.jdbc.Driver</span></span><br><span class="line">  <span class="attr">jpa:</span></span><br><span class="line">    <span class="comment">#打印SQL语句</span></span><br><span class="line">    <span class="attr">show-sql:</span> <span class="literal">true</span></span><br><span class="line">    <span class="comment">#使用测试用例时需要配置该项</span></span><br><span class="line">    <span class="attr">properties:</span></span><br><span class="line">      <span class="attr">hibernate:</span></span><br><span class="line">        <span class="attr">enable_lazy_load_no_trans:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>3.新建实体类，并建立映射关系</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Table(name = &quot;student&quot;)</span></span><br><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Student</span> &#123;</span><br><span class="line">    <span class="meta">@Id</span></span><br><span class="line">    <span class="meta">@GeneratedValue(strategy = GenerationType.IDENTITY)</span></span><br><span class="line">    <span class="keyword">private</span> Integer studentId;</span><br><span class="line">    <span class="meta">@Column(name = &quot;student_name&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String studentName;</span><br><span class="line">    <span class="meta">@Column(name = &quot;student_gender&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String studentGender;</span><br><span class="line">    <span class="meta">@Column(name = &quot;student_age&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String studentAge;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>@Table：用于表明该实体类对应的是数据库中的哪张表，name属性用于配置表名。</p>
+<p>@Entity：JPA要求实体类上需要标注该注解</p>
+<p>@Id：在标注了@Entity的类上必须有一个字段标注该注解，该注解用于表明标注了此注解的字段是主键。</p>
+<p>@GeneratedValue：用于表明该主键的生成策略，通常和@Id同时出现</p>
+<p>@Column：该注解并不是必须的，通常用于表明该变量对应的数据库表字段，如果字段名称使用经典命名法，而变量名称使用了驼峰命名法，则此注解可以省略</p>
+<h3 id="JpaRepository接口详解"><a href="#JpaRepository接口详解" class="headerlink" title="JpaRepository接口详解"></a>JpaRepository接口详解</h3><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">public interface JpaRepository<span class="operator">&lt;</span>T, ID<span class="operator">&gt;</span> extends PagingAndSortingRepository<span class="operator">&lt;</span>T, ID<span class="operator">&gt;</span>, QueryByExampleExecutor<span class="operator">&lt;</span>T<span class="operator">&gt;</span> &#123;</span><br><span class="line">	<span class="operator">/</span><span class="operator">/</span>查询所有的数据</span><br><span class="line">    List<span class="operator">&lt;</span>T<span class="operator">&gt;</span> findAll();</span><br><span class="line">	<span class="operator">/</span><span class="operator">/</span>查询所有的数据，并排序，排序的字段及排序方式通过Sort对象指定</span><br><span class="line">    List<span class="operator">&lt;</span>T<span class="operator">&gt;</span> findAll(Sort sort);</span><br><span class="line">	<span class="operator">/</span><span class="operator">/</span>根据ID批量查询</span><br><span class="line">    List<span class="operator">&lt;</span>T<span class="operator">&gt;</span> findAllById(Iterable<span class="operator">&lt;</span>ID<span class="operator">&gt;</span> ids);</span><br><span class="line">	<span class="operator">/</span><span class="operator">/</span>批量保存</span><br><span class="line">    <span class="operator">&lt;</span>S extends T<span class="operator">&gt;</span> List<span class="operator">&lt;</span>S<span class="operator">&gt;</span> saveAll(Iterable<span class="operator">&lt;</span>S<span class="operator">&gt;</span> entities);</span><br><span class="line">	<span class="operator">/</span><span class="operator">/</span>刷新缓存</span><br><span class="line">    void flush();</span><br><span class="line">	<span class="operator">/</span><span class="operator">/</span>保存并刷新缓存</span><br><span class="line">    <span class="operator">&lt;</span>S extends T<span class="operator">&gt;</span> S saveAndFlush(S entity);</span><br><span class="line">	<span class="operator">/</span><span class="operator">/</span>批量保存并刷新缓存</span><br><span class="line">    <span class="operator">&lt;</span>S extends T<span class="operator">&gt;</span> List<span class="operator">&lt;</span>S<span class="operator">&gt;</span> saveAllAndFlush(Iterable<span class="operator">&lt;</span>S<span class="operator">&gt;</span> entities);</span><br><span class="line">	<span class="operator">/</span><span class="operator">/</span>批量删除</span><br><span class="line">    void deleteAllInBatch(Iterable<span class="operator">&lt;</span>T<span class="operator">&gt;</span> entities);</span><br><span class="line">	<span class="operator">/</span><span class="operator">/</span>通过ID批量删除</span><br><span class="line">    void deleteAllByIdInBatch(Iterable<span class="operator">&lt;</span>ID<span class="operator">&gt;</span> ids);</span><br><span class="line">	<span class="operator">/</span><span class="operator">/</span>等价于删除全部数据</span><br><span class="line">    void deleteAllInBatch();</span><br><span class="line">	<span class="operator">/</span><span class="operator">/</span>通过ID查询</span><br><span class="line">    T getById(ID id);</span><br><span class="line">	<span class="operator">/</span><span class="operator">/</span>通过示例批量查询</span><br><span class="line">    <span class="operator">&lt;</span>S extends T<span class="operator">&gt;</span> List<span class="operator">&lt;</span>S<span class="operator">&gt;</span> findAll(Example<span class="operator">&lt;</span>S<span class="operator">&gt;</span> example);</span><br><span class="line">	<span class="operator">/</span><span class="operator">/</span>通过示例批量查询</span><br><span class="line">    <span class="operator">&lt;</span>S extends T<span class="operator">&gt;</span> List<span class="operator">&lt;</span>S<span class="operator">&gt;</span> findAll(Example<span class="operator">&lt;</span>S<span class="operator">&gt;</span> example, Sort sort);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+]]></content>
+  </entry>
+  <entry>
+    <title>Markdown过长导致页面无法显示问题</title>
+    <url>/2022/07/04/Markdown%E8%BF%87%E9%95%BF%E5%AF%BC%E8%87%B4%E9%A1%B5%E9%9D%A2%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<p><img src="https://img1.baidu.com/it/u=729938845,709425648&fm=253&fmt=auto&app=138&f=JPEG?w=977&h=500" alt="img"></p>
+<span id="more"></span>
+
+<h2 id="文章摘要设置"><a href="#文章摘要设置" class="headerlink" title="文章摘要设置"></a>文章摘要设置</h2><p>打开主题配置文件 _config.yml 文件，找到如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># Automatically Excerpt. Not recommend.</span><br><span class="line"># Please use &lt;!-- more --&gt; in the post to control excerpt accurately.</span><br><span class="line">auto_excerpt:</span><br><span class="line">  enable: false</span><br><span class="line">  length: 150</span><br></pre></td></tr></table></figure>
+
+<p>把这里的false改为true就可以了在首页启动显示文章预览了，length是显示预览的长度。</p>
+<p>这里我们可以通过在文章使用<code>&lt;!-- more --&gt;</code>标志来精确控制文章的摘要预览，比如这篇文章就是在这个段落的末尾添加了该标志，所以本文在首页的预览就会显示到这个段落为止。</p>
+<p>强烈推荐使用该<code>&lt;!-- more --&gt;</code>标志来控制文章的摘要预览，因为这种方式可以让摘要也按照css文件中的样式来渲染。如果使用了自动摘要的功能，你会发现文章摘要是一大团没有样式的文本，很是难看。</p>
+<h2 id="其他的文章配置"><a href="#其他的文章配置" class="headerlink" title="其他的文章配置"></a>其他的文章配置</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># ---------------------------------------------------------------</span><br><span class="line"># Post Settings</span><br><span class="line"># ---------------------------------------------------------------# Automatically scroll page to section which is under &lt;!-- more --&gt; mark.</span><br><span class="line"># 自动将页面滚动到&lt;!-- more --&gt;标记下的地方。</span><br><span class="line">scroll_to_more: false# Automatically saving scroll position on each post/page in cookies.</span><br><span class="line"># 自动保存每篇文章或页面上一次滚动的地方。</span><br><span class="line">save_scroll: false# Automatically excerpt description in homepage as preamble text.</span><br><span class="line"># 自动在首页对文章进行摘要描述作为前言文本。</span><br><span class="line">excerpt_description: true# Automatically Excerpt. Not recommend.</span><br><span class="line"># Please use &lt;!-- more --&gt; in the post to control excerpt accurately.</span><br><span class="line"># 不推荐使用自动摘要。</span><br><span class="line"># 请在文章中使用&lt;!-- more --&gt;标志来精确控制摘要长度。</span><br><span class="line">auto_excerpt:</span><br><span class="line">  enable: true</span><br><span class="line">  length: 200# Post meta display settings</span><br><span class="line"># 文章元数据展示设置</span><br><span class="line">post_meta:</span><br><span class="line">  # 文本显示</span><br><span class="line">  item_text: true</span><br><span class="line">  # 创建时间</span><br><span class="line">  created_at: true</span><br><span class="line">  # 更新时间</span><br><span class="line">  # 这个更新时间有点问题，因为每次重新生成文章/部署时都会刷新更新时间，不建议使用</span><br><span class="line">  updated_at: false</span><br><span class="line">  # 目录分类</span><br><span class="line">  categories: true# Post wordcount display settings</span><br><span class="line"># Dependencies: https://github.com/willin/hexo-wordcount</span><br><span class="line"># 文章字数展示设置</span><br><span class="line">post_wordcount:</span><br><span class="line">  # 文本显示</span><br><span class="line">  item_text: true</span><br><span class="line">  # 文章字数统计</span><br><span class="line">  wordcount: true</span><br><span class="line">  # 阅读时长</span><br><span class="line">  min2read: true</span><br><span class="line">  # 站点总字数统计</span><br><span class="line">  totalcount: true</span><br><span class="line">  # 该post_wordcount的所有设置另起一行显示</span><br><span class="line">  separated_meta: true</span><br></pre></td></tr></table></figure>]]></content>
   </entry>
   <entry>
     <title>Hello World</title>
@@ -593,159 +747,5 @@
 </tbody></table>
 <p>代码：</p>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">HTML</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">b</span>&gt;</span>定义粗体文本<span class="tag">&lt;/<span class="name">b</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">br</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">em</span>&gt;</span>定义着重文字<span class="tag">&lt;/<span class="name">em</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">br</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">i</span>&gt;</span>定义斜体文字<span class="tag">&lt;/<span class="name">i</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">br</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">small</span>&gt;</span>定义小号文字<span class="tag">&lt;/<span class="name">small</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">br</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">strong</span>&gt;</span>定义加重语气<span class="tag">&lt;/<span class="name">strong</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">br</span>/&gt;</span></span><br><span class="line">    定义下标字 <span class="tag">&lt;<span class="name">sub</span>&gt;</span>aa<span class="tag">&lt;/<span class="name">sub</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">br</span>/&gt;</span></span><br><span class="line">    定义上标字 <span class="tag">&lt;<span class="name">sup</span>&gt;</span>aa<span class="tag">&lt;/<span class="name">sup</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">br</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ins</span>&gt;</span>定义插入字(加了下划线)<span class="tag">&lt;/<span class="name">ins</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">br</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">del</span>&gt;</span>定义删除字(加了删除线)<span class="tag">&lt;/<span class="name">del</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>]]></content>
-  </entry>
-  <entry>
-    <title>Markdown过长导致页面无法显示问题</title>
-    <url>/2022/07/04/Markdown%E8%BF%87%E9%95%BF%E5%AF%BC%E8%87%B4%E9%A1%B5%E9%9D%A2%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<p><img src="https://img1.baidu.com/it/u=729938845,709425648&fm=253&fmt=auto&app=138&f=JPEG?w=977&h=500" alt="img"></p>
-<span id="more"></span>
-
-<h2 id="文章摘要设置"><a href="#文章摘要设置" class="headerlink" title="文章摘要设置"></a>文章摘要设置</h2><p>打开主题配置文件 _config.yml 文件，找到如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># Automatically Excerpt. Not recommend.</span><br><span class="line"># Please use &lt;!-- more --&gt; in the post to control excerpt accurately.</span><br><span class="line">auto_excerpt:</span><br><span class="line">  enable: false</span><br><span class="line">  length: 150</span><br></pre></td></tr></table></figure>
-
-<p>把这里的false改为true就可以了在首页启动显示文章预览了，length是显示预览的长度。</p>
-<p>这里我们可以通过在文章使用<code>&lt;!-- more --&gt;</code>标志来精确控制文章的摘要预览，比如这篇文章就是在这个段落的末尾添加了该标志，所以本文在首页的预览就会显示到这个段落为止。</p>
-<p>强烈推荐使用该<code>&lt;!-- more --&gt;</code>标志来控制文章的摘要预览，因为这种方式可以让摘要也按照css文件中的样式来渲染。如果使用了自动摘要的功能，你会发现文章摘要是一大团没有样式的文本，很是难看。</p>
-<h2 id="其他的文章配置"><a href="#其他的文章配置" class="headerlink" title="其他的文章配置"></a>其他的文章配置</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># ---------------------------------------------------------------</span><br><span class="line"># Post Settings</span><br><span class="line"># ---------------------------------------------------------------# Automatically scroll page to section which is under &lt;!-- more --&gt; mark.</span><br><span class="line"># 自动将页面滚动到&lt;!-- more --&gt;标记下的地方。</span><br><span class="line">scroll_to_more: false# Automatically saving scroll position on each post/page in cookies.</span><br><span class="line"># 自动保存每篇文章或页面上一次滚动的地方。</span><br><span class="line">save_scroll: false# Automatically excerpt description in homepage as preamble text.</span><br><span class="line"># 自动在首页对文章进行摘要描述作为前言文本。</span><br><span class="line">excerpt_description: true# Automatically Excerpt. Not recommend.</span><br><span class="line"># Please use &lt;!-- more --&gt; in the post to control excerpt accurately.</span><br><span class="line"># 不推荐使用自动摘要。</span><br><span class="line"># 请在文章中使用&lt;!-- more --&gt;标志来精确控制摘要长度。</span><br><span class="line">auto_excerpt:</span><br><span class="line">  enable: true</span><br><span class="line">  length: 200# Post meta display settings</span><br><span class="line"># 文章元数据展示设置</span><br><span class="line">post_meta:</span><br><span class="line">  # 文本显示</span><br><span class="line">  item_text: true</span><br><span class="line">  # 创建时间</span><br><span class="line">  created_at: true</span><br><span class="line">  # 更新时间</span><br><span class="line">  # 这个更新时间有点问题，因为每次重新生成文章/部署时都会刷新更新时间，不建议使用</span><br><span class="line">  updated_at: false</span><br><span class="line">  # 目录分类</span><br><span class="line">  categories: true# Post wordcount display settings</span><br><span class="line"># Dependencies: https://github.com/willin/hexo-wordcount</span><br><span class="line"># 文章字数展示设置</span><br><span class="line">post_wordcount:</span><br><span class="line">  # 文本显示</span><br><span class="line">  item_text: true</span><br><span class="line">  # 文章字数统计</span><br><span class="line">  wordcount: true</span><br><span class="line">  # 阅读时长</span><br><span class="line">  min2read: true</span><br><span class="line">  # 站点总字数统计</span><br><span class="line">  totalcount: true</span><br><span class="line">  # 该post_wordcount的所有设置另起一行显示</span><br><span class="line">  separated_meta: true</span><br></pre></td></tr></table></figure>]]></content>
-  </entry>
-  <entry>
-    <title>SpringBoot整合JPA</title>
-    <url>/2022/07/01/SpringBoot%E6%95%B4%E5%90%88Jpa/</url>
-    <content><![CDATA[<p><img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg2020.cnblogs.com%2Fblog%2F2331630%2F202107%2F2331630-20210721141158611-538846916.png&refer=http%3A%2F%2Fimg2020.cnblogs.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1659501639&t=2f8efd79e607e9df171c317efc448f26" alt="img"></p>
-<span id="more"></span>
-
-
-<p>1.添加依赖</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="operator">&lt;</span>dependency<span class="operator">&gt;</span></span><br><span class="line">            <span class="operator">&lt;</span>groupId<span class="operator">&gt;</span>org.springframework.boot<span class="operator">&lt;</span><span class="operator">/</span>groupId<span class="operator">&gt;</span></span><br><span class="line">            <span class="operator">&lt;</span>artifactId<span class="operator">&gt;</span>spring<span class="operator">-</span>boot<span class="operator">-</span>starter<span class="operator">-</span>data<span class="operator">-</span>jpa<span class="operator">&lt;</span><span class="operator">/</span>artifactId<span class="operator">&gt;</span></span><br><span class="line">        <span class="operator">&lt;</span><span class="operator">/</span>dependency<span class="operator">&gt;</span></span><br><span class="line">        <span class="operator">&lt;</span>dependency<span class="operator">&gt;</span></span><br><span class="line">            <span class="operator">&lt;</span>groupId<span class="operator">&gt;</span>org.springframework.boot<span class="operator">&lt;</span><span class="operator">/</span>groupId<span class="operator">&gt;</span></span><br><span class="line">            <span class="operator">&lt;</span>artifactId<span class="operator">&gt;</span>spring<span class="operator">-</span>boot<span class="operator">-</span>starter<span class="operator">-</span>jdbc<span class="operator">&lt;</span><span class="operator">/</span>artifactId<span class="operator">&gt;</span></span><br><span class="line">        <span class="operator">&lt;</span><span class="operator">/</span>dependency<span class="operator">&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>2.配置数据源</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">datasource:</span></span><br><span class="line">    <span class="attr">url:</span> <span class="string">jdbc:mysql://localhost:3306/student?serverTimezone=Asia/Shanghai</span></span><br><span class="line">    <span class="attr">username:</span> <span class="string">root</span></span><br><span class="line">    <span class="attr">password:</span> <span class="string">root</span></span><br><span class="line">    <span class="attr">driver-class-name:</span> <span class="string">com.mysql.cj.jdbc.Driver</span></span><br><span class="line">  <span class="attr">jpa:</span></span><br><span class="line">    <span class="comment">#打印SQL语句</span></span><br><span class="line">    <span class="attr">show-sql:</span> <span class="literal">true</span></span><br><span class="line">    <span class="comment">#使用测试用例时需要配置该项</span></span><br><span class="line">    <span class="attr">properties:</span></span><br><span class="line">      <span class="attr">hibernate:</span></span><br><span class="line">        <span class="attr">enable_lazy_load_no_trans:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-
-<p>3.新建实体类，并建立映射关系</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Table(name = &quot;student&quot;)</span></span><br><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Student</span> &#123;</span><br><span class="line">    <span class="meta">@Id</span></span><br><span class="line">    <span class="meta">@GeneratedValue(strategy = GenerationType.IDENTITY)</span></span><br><span class="line">    <span class="keyword">private</span> Integer studentId;</span><br><span class="line">    <span class="meta">@Column(name = &quot;student_name&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String studentName;</span><br><span class="line">    <span class="meta">@Column(name = &quot;student_gender&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String studentGender;</span><br><span class="line">    <span class="meta">@Column(name = &quot;student_age&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String studentAge;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>@Table：用于表明该实体类对应的是数据库中的哪张表，name属性用于配置表名。</p>
-<p>@Entity：JPA要求实体类上需要标注该注解</p>
-<p>@Id：在标注了@Entity的类上必须有一个字段标注该注解，该注解用于表明标注了此注解的字段是主键。</p>
-<p>@GeneratedValue：用于表明该主键的生成策略，通常和@Id同时出现</p>
-<p>@Column：该注解并不是必须的，通常用于表明该变量对应的数据库表字段，如果字段名称使用经典命名法，而变量名称使用了驼峰命名法，则此注解可以省略</p>
-<h3 id="JpaRepository接口详解"><a href="#JpaRepository接口详解" class="headerlink" title="JpaRepository接口详解"></a>JpaRepository接口详解</h3><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">public interface JpaRepository<span class="operator">&lt;</span>T, ID<span class="operator">&gt;</span> extends PagingAndSortingRepository<span class="operator">&lt;</span>T, ID<span class="operator">&gt;</span>, QueryByExampleExecutor<span class="operator">&lt;</span>T<span class="operator">&gt;</span> &#123;</span><br><span class="line">	<span class="operator">/</span><span class="operator">/</span>查询所有的数据</span><br><span class="line">    List<span class="operator">&lt;</span>T<span class="operator">&gt;</span> findAll();</span><br><span class="line">	<span class="operator">/</span><span class="operator">/</span>查询所有的数据，并排序，排序的字段及排序方式通过Sort对象指定</span><br><span class="line">    List<span class="operator">&lt;</span>T<span class="operator">&gt;</span> findAll(Sort sort);</span><br><span class="line">	<span class="operator">/</span><span class="operator">/</span>根据ID批量查询</span><br><span class="line">    List<span class="operator">&lt;</span>T<span class="operator">&gt;</span> findAllById(Iterable<span class="operator">&lt;</span>ID<span class="operator">&gt;</span> ids);</span><br><span class="line">	<span class="operator">/</span><span class="operator">/</span>批量保存</span><br><span class="line">    <span class="operator">&lt;</span>S extends T<span class="operator">&gt;</span> List<span class="operator">&lt;</span>S<span class="operator">&gt;</span> saveAll(Iterable<span class="operator">&lt;</span>S<span class="operator">&gt;</span> entities);</span><br><span class="line">	<span class="operator">/</span><span class="operator">/</span>刷新缓存</span><br><span class="line">    void flush();</span><br><span class="line">	<span class="operator">/</span><span class="operator">/</span>保存并刷新缓存</span><br><span class="line">    <span class="operator">&lt;</span>S extends T<span class="operator">&gt;</span> S saveAndFlush(S entity);</span><br><span class="line">	<span class="operator">/</span><span class="operator">/</span>批量保存并刷新缓存</span><br><span class="line">    <span class="operator">&lt;</span>S extends T<span class="operator">&gt;</span> List<span class="operator">&lt;</span>S<span class="operator">&gt;</span> saveAllAndFlush(Iterable<span class="operator">&lt;</span>S<span class="operator">&gt;</span> entities);</span><br><span class="line">	<span class="operator">/</span><span class="operator">/</span>批量删除</span><br><span class="line">    void deleteAllInBatch(Iterable<span class="operator">&lt;</span>T<span class="operator">&gt;</span> entities);</span><br><span class="line">	<span class="operator">/</span><span class="operator">/</span>通过ID批量删除</span><br><span class="line">    void deleteAllByIdInBatch(Iterable<span class="operator">&lt;</span>ID<span class="operator">&gt;</span> ids);</span><br><span class="line">	<span class="operator">/</span><span class="operator">/</span>等价于删除全部数据</span><br><span class="line">    void deleteAllInBatch();</span><br><span class="line">	<span class="operator">/</span><span class="operator">/</span>通过ID查询</span><br><span class="line">    T getById(ID id);</span><br><span class="line">	<span class="operator">/</span><span class="operator">/</span>通过示例批量查询</span><br><span class="line">    <span class="operator">&lt;</span>S extends T<span class="operator">&gt;</span> List<span class="operator">&lt;</span>S<span class="operator">&gt;</span> findAll(Example<span class="operator">&lt;</span>S<span class="operator">&gt;</span> example);</span><br><span class="line">	<span class="operator">/</span><span class="operator">/</span>通过示例批量查询</span><br><span class="line">    <span class="operator">&lt;</span>S extends T<span class="operator">&gt;</span> List<span class="operator">&lt;</span>S<span class="operator">&gt;</span> findAll(Example<span class="operator">&lt;</span>S<span class="operator">&gt;</span> example, Sort sort);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-]]></content>
-  </entry>
-  <entry>
-    <title>Hexo+GitHub搭建博客</title>
-    <url>/2022/07/01/Hexo+GitHub%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/</url>
-    <content><![CDATA[<p><img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fwww.zyiz.net%2Fupload%2F202002%2F18%2F202002182223498227.png&refer=http%3A%2F%2Fwww.zyiz.net&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1659501869&t=eedef2a99fe19a8fd51bafe9ae2a1177" alt="img"></p>
-<span id="more"></span>
-
-<p>搭建博客千千万，最后受欢迎的9还是Hexo和Jekyll,用户用的非常多的两个静态博客生成系统。本文就介绍利用Hexo结合github page来搭建个人博客。</p>
-<h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><h3 id="什么是Hexo？"><a href="#什么是Hexo？" class="headerlink" title="什么是Hexo？"></a>什么是Hexo？</h3><p>Hexo 是一个基于 node.js 制作的快速、简洁且高效的博客框架。Hexo 可以将我们撰写的 Markdown 文档解析渲染成静态的 HTML 网页。</p>
-<h3 id="Hexo和Jekyll的区别"><a href="#Hexo和Jekyll的区别" class="headerlink" title="Hexo和Jekyll的区别"></a>Hexo和Jekyll的区别</h3><p>·本地环境<br>Jeklly 是由 Ruby 语言编写，需要到官网下载并安装 RubyInstaller。Hexo 则需要安装 Node.js 环境。网上经常看到很多人吐槽安装 Jekyll 经常碰到各种问题。</p>
-<p>·速度<br>说是比较 Hexo 和 Jeklly 这两个框架，其实要比较 Ruby 和 Node.js 的运行速度。Node.js 是一个 Javascrip t运行环境(Runtime)。实际上它是对 Google V8 引擎进行了封装。众所周知，Google JS Runtime 速度非常快，性能非常好。在本地预览上，Jekyll 是生成了页面然后进行预览，而 Hexo 是没有在根目录生成文件的，速度也快不少。因此，Hexo 在性能和速度上面更胜一筹。</p>
-<p>·部署<br>Jeklly 是将整个工程源码上传到 Github 仓库，然后 Github 会自动生成静态文件。而 Hexo 需要事先在本地生成整个站点页面，再将 Html 文件、资源文件等上传到 Github 上。</p>
-<p>·主题<br>Jekyll 使用 Liquid；它是有 Ruby 语言编写的开源模板语言。Hexo 使用的是 EJS；EJS 是 JavaScript 模板库，用来从 JSON 数据中生成 HTML 字符串。EJS 相对比较复杂，所以可实现的功能更加的多。从开发一个主题难度上看，Hexo 实现起来更方便、更简单些。</p>
-<h2 id="安装环境"><a href="#安装环境" class="headerlink" title="安装环境"></a>安装环境</h2><p>1、本机系统：Windows 10（64位）<br>2、Node.js：v6.9.2LTS（64位）</p>
-<h2 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h2><h3 id="安装Node-js"><a href="#安装Node-js" class="headerlink" title="安装Node.js"></a>安装Node.js</h3><p>简单的说 Node.js 就是运行在服务端的 JavaScript。Node.js 是一个基于 Chrome V8 引擎的 JavaScript 运行环境。Node.js 使用了一个事件驱动、非阻塞式 I&#x2F;O 的模型，使其轻量又高效。Node.js 的包管理器 npm，是全球最大的开源库生态系统。<br>打开官网下载链接Node.js:<a href="https://nodejs.org/en/">https://nodejs.org/en/</a> (选择长期服务，版本更稳定)</p>
-<p><img src="https://i.loli.net/2021/10/19/PWDijRHqgzxFbyn.jpg" alt="img"></p>
-<p>下载完成之后直接双击安装包，只需点击下一步（默认所有选项），然后改变安装路径即可。</p>
-<p>测试安装是否成功：</p>
-<p>按【win+R】键，输入cmd，再按回车弹出命令窗口</p>
-<p>输入：(显示版本行)</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">node -v </span><br><span class="line">npm -v</span><br></pre></td></tr></table></figure>
-
-<p>显示结果：</p>
-<p><img src="https://i.loli.net/2021/10/19/fDzgWhEbnkxPevL.jpg" alt="img"></p>
-<p>即安装成功；</p>
-<h3 id="安装git"><a href="#安装git" class="headerlink" title="安装git"></a>安装git</h3><p>Git是一个开源的分布式版本控制系统，可以有效、高速地处理从很小到非常大的项目版本管理。 也是Linus Torvalds为了帮助管理Linux内核开发而开发的一个开放源码的版本控制软件。</p>
-<p><strong>从一般开发者的角度来看，git有以下功能：</strong><br>1、从服务器上克隆完整的Git仓库（包括代码和版本信息）到单机上。<br>2、在自己的机器上根据不同的开发目的，创建分支，修改代码。<br>3、在单机上自己创建的分支上提交代码。<br>4、在单机上合并分支。<br>5、把服务器上最新版的代码fetch下来，然后跟自己的主分支合并。<br>6、生成补丁（patch），把补丁发送给主开发者。</p>
-<p>打开官网下载链接：<a href="https://git-scm.com/downloads">https://git-scm.com/downloads</a> (选择windows版本即可)</p>
-<p><img src="https://i.loli.net/2021/10/19/7UgXJ4y3MV6Bpri.jpg" alt="img"></p>
-<p>下载完成之后直接双击安装包，只需点击下一步（出下图外选项，默认所有选项），然后改变安装路径即可。</p>
-<p><img src="https://i.loli.net/2021/10/19/oT9CgyscVXWPnbF.jpg" alt="img"></p>
-<p>测试是否安装成功：</p>
-<p>按【win+R】键，输入cmd，再按回车弹出命令窗口，再输入：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git</span><br></pre></td></tr></table></figure>
-
-<p>显示结果:</p>
-<p><img src="https://i.loli.net/2021/10/19/y5LnHxaYiID93Cs.jpg" alt="img"></p>
-<h2 id="开始搭建"><a href="#开始搭建" class="headerlink" title="开始搭建"></a>开始搭建</h2><h3 id="在Git安装目录中点击【git-bash-exe】-输入命令：（输入时引号不要删）"><a href="#在Git安装目录中点击【git-bash-exe】-输入命令：（输入时引号不要删）" class="headerlink" title="在Git安装目录中点击【git-bash.exe】,输入命令：（输入时引号不要删）"></a>在Git安装目录中点击【git-bash.exe】,输入命令：（输入时引号不要删）</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa -C &quot;Github注册的邮箱&quot;</span><br></pre></td></tr></table></figure>
-
-<p>然后按四次【enter】即可，生成后如下图：</p>
-<p><img src="https://i.loli.net/2021/10/19/6S8LwDAmHTMvqJz.jpg" alt="img"></p>
-<h3 id="打开Github-点击头像–-gt-【setting】"><a href="#打开Github-点击头像–-gt-【setting】" class="headerlink" title="打开Github,点击头像–&gt;【setting】"></a>打开Github,点击头像–&gt;【setting】</h3><p><img src="https://i.loli.net/2021/10/19/15flbemyaNIu4MU.jpg" alt="img"></p>
-<h3 id="点击【SSH-and-GPG-keys】–-gt-【New-SSH-key】"><a href="#点击【SSH-and-GPG-keys】–-gt-【New-SSH-key】" class="headerlink" title="点击【SSH and GPG keys】–&gt;【New SSH key】"></a>点击【SSH and GPG keys】–&gt;【New SSH key】</h3><p><img src="https://i.loli.net/2021/10/19/JNnuwh4dAMHFILT.jpg" alt="img"></p>
-<h3 id="输入title（可以随便输），但Key你需要用记事本或Notepad-打开磁盘中c-x2F-用户-x2F-用户名-x2F-ssh-x2F-id-rsa-pub然后复制粘贴里面的内容到key中，最后点击【ADD-SSH-key】；"><a href="#输入title（可以随便输），但Key你需要用记事本或Notepad-打开磁盘中c-x2F-用户-x2F-用户名-x2F-ssh-x2F-id-rsa-pub然后复制粘贴里面的内容到key中，最后点击【ADD-SSH-key】；" class="headerlink" title="输入title（可以随便输），但Key你需要用记事本或Notepad++打开磁盘中c:&#x2F;用户&#x2F;用户名&#x2F;.ssh&#x2F;id_rsa.pub然后复制粘贴里面的内容到key中，最后点击【ADD SSH key】；"></a>输入title（可以随便输），但Key你需要用记事本或Notepad++打开<strong>磁盘中c:&#x2F;用户&#x2F;用户名&#x2F;.ssh&#x2F;id_rsa.pub</strong>然后复制粘贴里面的内容到key中，最后点击【ADD SSH key】；</h3><p><img src="https://i.loli.net/2021/10/19/uglR7p4jMUSbfxe.jpg" alt="img"></p>
-<h3 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h3><p>在想要搭建博客的目录下创建文件夹名为blog，按【win+R】键，输入cmd，再按回车弹出命令窗口，cd到创建的文件夹下，输入：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hexo-cli -g</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://i.loli.net/2021/10/19/pwBHNlgo2cdZiA4.jpg" alt="img"></p>
-<p>不要关闭刚才的命令窗口，在刚才的窗口中初始化hexo，输入：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo init 你的博客名</span><br></pre></td></tr></table></figure>
-
-<h3 id="在博客目录中安装依赖"><a href="#在博客目录中安装依赖" class="headerlink" title="在博客目录中安装依赖"></a>在博客目录中安装依赖</h3><p>在刚才的窗口中</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd 博客名</span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
-
-<p>安装完成之后进行测试，窗口中输入：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo s -p 5555</span><br></pre></td></tr></table></figure>
-
-<p>在浏览器上输入 localhost:5555</p>
-<p><img src="https://i.loli.net/2021/10/19/KFMBiULjA1yY8st.jpg" alt="img"></p>
-<h3 id="安装Sublime-Text"><a href="#安装Sublime-Text" class="headerlink" title="安装Sublime Text"></a>安装Sublime Text</h3><p>打开官网下载链接：<a href="https://www.sublimetext.com/">https://www.sublimetext.com/</a> （点击DPWNLOAD FOR WINDOWS）</p>
-<p><img src="https://i.loli.net/2021/10/19/kAnXiPatsr2zxDc.jpg" alt="img"></p>
-<p>下载完成之后直接双击安装包，只需点击下一步（默认所有选项），然后改变安装路径即可。</p>
-<p>打开Sublime 直接将博客目录拖进Sublime即可；</p>
-<p><img src="https://i.loli.net/2021/10/19/RMkyeoixVCAt81f.jpg" alt="img"></p>
-<h3 id="hexo发布到Github"><a href="#hexo发布到Github" class="headerlink" title="hexo发布到Github"></a>hexo发布到Github</h3><p>使用Sublime打开博客根目录中_config.yml 修改第16行的url 改为自己的网址（如 https:&#x2F;&#x2F;自己的博客名.github.io ）</p>
-<p><img src="https://i.loli.net/2021/10/20/QHMrJse8xOnjWl5.jpg" alt="img"></p>
-<p>打开Github网页点击【Your repositories】 最后复制链接</p>
-<p><img src="https://i.loli.net/2021/10/20/u1w8kDULWQBvGzs.jpg" alt="img"><img src="https://i.loli.net/2021/10/20/6cGuVNTXKWFSZsw.jpg" alt="img"><img src="https://i.loli.net/2021/10/20/Sn8IUm5Tsq6dDcg.jpg" alt="img"></p>
-<p>在_config.yml文件最后一行添加repo</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">repo: </span><br></pre></td></tr></table></figure>
-
-<p>将你复制的链接添加到repo之后，用引号隔开（切记引号后面必须要有空格）</p>
-<p>在最后一行添加</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">branch: main</span><br></pre></td></tr></table></figure>
-
-<p>type后添加git</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">type: git</span><br></pre></td></tr></table></figure>
-
-<p>如下图<br><img src="https://i.loli.net/2021/10/21/b4Px7pFjTvI5ea2.jpg" alt="img"></p>
-<p>在博客根目录下添加插件：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
-
-<h3 id="获取个人访问令牌"><a href="#获取个人访问令牌" class="headerlink" title="获取个人访问令牌"></a>获取个人访问令牌</h3><p>对密码身份验证的支持已于 2021 年 8 月 13 日移除。现在改用个人访问令牌。简单点说就是需要把你的密码换成 token。</p>
-<p>在个人设置页面，找到 Settings<br><img src="https://i.loli.net/2021/10/19/15flbemyaNIu4MU.jpg" alt="img"><br>找到 Developer settings<br><img src="https://i.loli.net/2021/10/21/VkyOgL5Z1746mzT.jpg" alt="img"><br>选择个人访问令牌 Personal access tokens，然后点击生成令牌 Generate new token<br><img src="https://i.loli.net/2021/10/21/KsVtaRpmhUSLorF.jpg" alt="img"><br>设置 token 的有效期，访问权限等，生成令牌 Generate token<br><img src="https://i.loli.net/2021/10/21/6Kdwmi7Qr2MWUJf.jpg" alt="img"><br>如下为生成的令牌<br><img src="https://i.loli.net/2021/10/21/LMsRWZaq8oSUwnh.jpg" alt="img"></p>
-<p>注意<br>记得把 token 保存下来，当你再次刷新网页的时候，就没办法看见了</p>
-<p>最后，把 token 直接添加远程仓库链接中，这样就可以避免同一个仓库每次提交代码都要输入 token 了。</p>
-<p>添加到如下图位置：（使用“@”和后面内容隔开）</p>
-<p><img src="https://i.loli.net/2021/10/21/WCX7dgp9UNFxJ1B.jpg" alt="img"></p>
-<h3 id="git中设置你的用户名和邮件名"><a href="#git中设置你的用户名和邮件名" class="headerlink" title="git中设置你的用户名和邮件名"></a>git中设置你的用户名和邮件名</h3><p>这一点很重要，因为每一个 Git 提交都会使用这些信息，它们会写入到你的每一次提交中。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git config --global user.name &quot;Your Name&quot;</span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git config --global user.name &quot;you@example.com&quot;</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="生成提交"><a href="#生成提交" class="headerlink" title="生成提交"></a>生成提交</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
-
-<p>打开你的浏览器：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">https://博客名.github.io</span><br></pre></td></tr></table></figure>
-
-<p>恭喜您，您的博客现在已制作完成，现在只需要添加你喜欢的主题既可以开始你的博客之旅了。</p>
-<h3 id="添加主题"><a href="#添加主题" class="headerlink" title="添加主题"></a>添加主题</h3><p>hexo主题网站：<a href="https://hexo.io/themes/">https://hexo.io/themes/</a><br><img src="https://i.loli.net/2021/10/21/AhUeqK8sB53jp4k.jpg" alt="img"></p>
-<p>找到你喜欢的主题，例如next主题 点击【next】<br><img src="https://i.loli.net/2021/10/21/ciqEGsyQ3l9Oorp.jpg" alt="img"></p>
-<p>按照文件中所说下载和修改即可<br><img src="https://i.loli.net/2021/10/21/b16RkjZFNDQAEic.jpg" alt="img"></p>
-<p>在博客根目录中打开【Git Bash Here】</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hexo-themes-next</span><br></pre></td></tr></table></figure>
-
-<p>安装完成后，打开 Hexo 配置文件(_config.yml)并将theme变量设置为next.</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">theme: next</span><br></pre></td></tr></table></figure>
-
-<h3 id="现在来介绍常用的Hexo-命令"><a href="#现在来介绍常用的Hexo-命令" class="headerlink" title="现在来介绍常用的Hexo 命令"></a>现在来介绍常用的Hexo 命令</h3><p>npm install hexo -g #安装Hexo<br>npm update hexo -g #升级<br>hexo init #初始化博客</p>
-<p>命令简写<br>hexo n “我的博客” &#x3D;&#x3D; hexo new “我的博客” #新建文章<br>hexo g &#x3D;&#x3D; hexo generate #生成<br>hexo s &#x3D;&#x3D; hexo server #启动服务预览<br>hexo d &#x3D;&#x3D; hexo deploy #部署</p>
-<p>hexo server #Hexo会监视文件变动并自动更新，无须重启服务器<br>hexo server -s #静态模式<br>hexo server -p 5000 #更改端口<br>hexo server -i 192.168.1.1 #自定义 IP<br>hexo clean #清除缓存，若是网页正常情况下可以忽略这条命令</p>
-]]></content>
   </entry>
 </search>
