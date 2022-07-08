@@ -117,6 +117,20 @@
 ]]></content>
   </entry>
   <entry>
+    <title>Markdown过长导致页面无法显示问题</title>
+    <url>/2022/07/04/Markdown%E8%BF%87%E9%95%BF%E5%AF%BC%E8%87%B4%E9%A1%B5%E9%9D%A2%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<p><img src="https://img1.baidu.com/it/u=729938845,709425648&fm=253&fmt=auto&app=138&f=JPEG?w=977&h=500" alt="img"></p>
+<span id="more"></span>
+
+<h2 id="文章摘要设置"><a href="#文章摘要设置" class="headerlink" title="文章摘要设置"></a>文章摘要设置</h2><p>打开主题配置文件 _config.yml 文件，找到如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># Automatically Excerpt. Not recommend.</span><br><span class="line"># Please use &lt;!-- more --&gt; in the post to control excerpt accurately.</span><br><span class="line">auto_excerpt:</span><br><span class="line">  enable: false</span><br><span class="line">  length: 150</span><br></pre></td></tr></table></figure>
+
+<p>把这里的false改为true就可以了在首页启动显示文章预览了，length是显示预览的长度。</p>
+<p>这里我们可以通过在文章使用<code>&lt;!-- more --&gt;</code>标志来精确控制文章的摘要预览，比如这篇文章就是在这个段落的末尾添加了该标志，所以本文在首页的预览就会显示到这个段落为止。</p>
+<p>强烈推荐使用该<code>&lt;!-- more --&gt;</code>标志来控制文章的摘要预览，因为这种方式可以让摘要也按照css文件中的样式来渲染。如果使用了自动摘要的功能，你会发现文章摘要是一大团没有样式的文本，很是难看。</p>
+<h2 id="其他的文章配置"><a href="#其他的文章配置" class="headerlink" title="其他的文章配置"></a>其他的文章配置</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># ---------------------------------------------------------------</span><br><span class="line"># Post Settings</span><br><span class="line"># ---------------------------------------------------------------# Automatically scroll page to section which is under &lt;!-- more --&gt; mark.</span><br><span class="line"># 自动将页面滚动到&lt;!-- more --&gt;标记下的地方。</span><br><span class="line">scroll_to_more: false# Automatically saving scroll position on each post/page in cookies.</span><br><span class="line"># 自动保存每篇文章或页面上一次滚动的地方。</span><br><span class="line">save_scroll: false# Automatically excerpt description in homepage as preamble text.</span><br><span class="line"># 自动在首页对文章进行摘要描述作为前言文本。</span><br><span class="line">excerpt_description: true# Automatically Excerpt. Not recommend.</span><br><span class="line"># Please use &lt;!-- more --&gt; in the post to control excerpt accurately.</span><br><span class="line"># 不推荐使用自动摘要。</span><br><span class="line"># 请在文章中使用&lt;!-- more --&gt;标志来精确控制摘要长度。</span><br><span class="line">auto_excerpt:</span><br><span class="line">  enable: true</span><br><span class="line">  length: 200# Post meta display settings</span><br><span class="line"># 文章元数据展示设置</span><br><span class="line">post_meta:</span><br><span class="line">  # 文本显示</span><br><span class="line">  item_text: true</span><br><span class="line">  # 创建时间</span><br><span class="line">  created_at: true</span><br><span class="line">  # 更新时间</span><br><span class="line">  # 这个更新时间有点问题，因为每次重新生成文章/部署时都会刷新更新时间，不建议使用</span><br><span class="line">  updated_at: false</span><br><span class="line">  # 目录分类</span><br><span class="line">  categories: true# Post wordcount display settings</span><br><span class="line"># Dependencies: https://github.com/willin/hexo-wordcount</span><br><span class="line"># 文章字数展示设置</span><br><span class="line">post_wordcount:</span><br><span class="line">  # 文本显示</span><br><span class="line">  item_text: true</span><br><span class="line">  # 文章字数统计</span><br><span class="line">  wordcount: true</span><br><span class="line">  # 阅读时长</span><br><span class="line">  min2read: true</span><br><span class="line">  # 站点总字数统计</span><br><span class="line">  totalcount: true</span><br><span class="line">  # 该post_wordcount的所有设置另起一行显示</span><br><span class="line">  separated_meta: true</span><br></pre></td></tr></table></figure>]]></content>
+  </entry>
+  <entry>
     <title>Json教程</title>
     <url>/2022/07/01/Json%E6%95%99%E7%A8%8B/</url>
     <content><![CDATA[<p><img src="https://img0.baidu.com/it/u=1264698771,643931544&fm=253&fmt=auto&app=138&f=JPEG?w=640&h=404" alt="img"></p>
@@ -155,20 +169,6 @@
 <p>在接收服务器数据时一般是字符串。</p>
 <p>我们可以使用 JSON.parse() 方法将数据转换为 JavaScript 对象。</p>
 ]]></content>
-  </entry>
-  <entry>
-    <title>Markdown过长导致页面无法显示问题</title>
-    <url>/2022/07/04/Markdown%E8%BF%87%E9%95%BF%E5%AF%BC%E8%87%B4%E9%A1%B5%E9%9D%A2%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<p><img src="https://img1.baidu.com/it/u=729938845,709425648&fm=253&fmt=auto&app=138&f=JPEG?w=977&h=500" alt="img"></p>
-<span id="more"></span>
-
-<h2 id="文章摘要设置"><a href="#文章摘要设置" class="headerlink" title="文章摘要设置"></a>文章摘要设置</h2><p>打开主题配置文件 _config.yml 文件，找到如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># Automatically Excerpt. Not recommend.</span><br><span class="line"># Please use &lt;!-- more --&gt; in the post to control excerpt accurately.</span><br><span class="line">auto_excerpt:</span><br><span class="line">  enable: false</span><br><span class="line">  length: 150</span><br></pre></td></tr></table></figure>
-
-<p>把这里的false改为true就可以了在首页启动显示文章预览了，length是显示预览的长度。</p>
-<p>这里我们可以通过在文章使用<code>&lt;!-- more --&gt;</code>标志来精确控制文章的摘要预览，比如这篇文章就是在这个段落的末尾添加了该标志，所以本文在首页的预览就会显示到这个段落为止。</p>
-<p>强烈推荐使用该<code>&lt;!-- more --&gt;</code>标志来控制文章的摘要预览，因为这种方式可以让摘要也按照css文件中的样式来渲染。如果使用了自动摘要的功能，你会发现文章摘要是一大团没有样式的文本，很是难看。</p>
-<h2 id="其他的文章配置"><a href="#其他的文章配置" class="headerlink" title="其他的文章配置"></a>其他的文章配置</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># ---------------------------------------------------------------</span><br><span class="line"># Post Settings</span><br><span class="line"># ---------------------------------------------------------------# Automatically scroll page to section which is under &lt;!-- more --&gt; mark.</span><br><span class="line"># 自动将页面滚动到&lt;!-- more --&gt;标记下的地方。</span><br><span class="line">scroll_to_more: false# Automatically saving scroll position on each post/page in cookies.</span><br><span class="line"># 自动保存每篇文章或页面上一次滚动的地方。</span><br><span class="line">save_scroll: false# Automatically excerpt description in homepage as preamble text.</span><br><span class="line"># 自动在首页对文章进行摘要描述作为前言文本。</span><br><span class="line">excerpt_description: true# Automatically Excerpt. Not recommend.</span><br><span class="line"># Please use &lt;!-- more --&gt; in the post to control excerpt accurately.</span><br><span class="line"># 不推荐使用自动摘要。</span><br><span class="line"># 请在文章中使用&lt;!-- more --&gt;标志来精确控制摘要长度。</span><br><span class="line">auto_excerpt:</span><br><span class="line">  enable: true</span><br><span class="line">  length: 200# Post meta display settings</span><br><span class="line"># 文章元数据展示设置</span><br><span class="line">post_meta:</span><br><span class="line">  # 文本显示</span><br><span class="line">  item_text: true</span><br><span class="line">  # 创建时间</span><br><span class="line">  created_at: true</span><br><span class="line">  # 更新时间</span><br><span class="line">  # 这个更新时间有点问题，因为每次重新生成文章/部署时都会刷新更新时间，不建议使用</span><br><span class="line">  updated_at: false</span><br><span class="line">  # 目录分类</span><br><span class="line">  categories: true# Post wordcount display settings</span><br><span class="line"># Dependencies: https://github.com/willin/hexo-wordcount</span><br><span class="line"># 文章字数展示设置</span><br><span class="line">post_wordcount:</span><br><span class="line">  # 文本显示</span><br><span class="line">  item_text: true</span><br><span class="line">  # 文章字数统计</span><br><span class="line">  wordcount: true</span><br><span class="line">  # 阅读时长</span><br><span class="line">  min2read: true</span><br><span class="line">  # 站点总字数统计</span><br><span class="line">  totalcount: true</span><br><span class="line">  # 该post_wordcount的所有设置另起一行显示</span><br><span class="line">  separated_meta: true</span><br></pre></td></tr></table></figure>]]></content>
   </entry>
   <entry>
     <title>SpringBoot整合JPA</title>
